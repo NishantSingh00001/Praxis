@@ -1,0 +1,331 @@
+/* Praxis shell, home and agent layouts. Colours come from the theme tokens. */
+
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 36px 24px 80px;
+}
+
+/* header */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  backdrop-filter: blur(12px);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--display);
+  font-size: 21px;
+  font-weight: 600;
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+}
+.brand-mark {
+  color: var(--accent);
+}
+.top-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.top-link {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.top-link:hover {
+  color: var(--text);
+}
+.top-link.on {
+  color: var(--text);
+  background: var(--surface-2);
+}
+.theme-toggle {
+  margin-left: 8px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 16px;
+  backdrop-filter: var(--glass-blur);
+}
+@media (max-width: 680px) {
+  .top-link {
+    display: none;
+  }
+}
+
+/* home */
+.home-hero {
+  padding: 40px 0 44px;
+  text-align: center;
+}
+.home-hero h1 {
+  font-size: clamp(44px, 8vw, 86px);
+  margin: 16px 0;
+  letter-spacing: -0.02em;
+}
+:root[data-theme="light"] .home-hero h1 {
+  font-style: italic;
+}
+.home-hero .lead {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--muted);
+  max-width: 56ch;
+  margin: 0 auto;
+}
+.agent-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+.agent-card {
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.agent-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+}
+.ac-glyph {
+  font-size: 26px;
+  color: var(--accent);
+}
+.agent-card h3 {
+  font-size: 21px;
+}
+.ac-pattern {
+  margin-top: auto;
+  font-size: 12px;
+  color: var(--accent-2);
+  padding-top: 8px;
+}
+
+/* agent page */
+.agent-head {
+  margin-bottom: 24px;
+}
+.back {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 0 12px;
+}
+.agent-head h2 {
+  font-size: clamp(28px, 4vw, 40px);
+}
+.agent {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.agent-output {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+@media (max-width: 820px) {
+  .agent-output {
+    grid-template-columns: 1fr;
+  }
+}
+.field-label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 620px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* step trace */
+.trace {
+  display: flex;
+  flex-direction: column;
+}
+.tstep {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 10px;
+}
+.trail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tnode {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-top: 4px;
+  background: var(--line-strong);
+  flex-shrink: 0;
+}
+.tstep.running .tnode {
+  background: var(--warn);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--warn) 22%, transparent);
+  animation: tpulse 0.7s ease-in-out infinite;
+}
+.tstep.done .tnode {
+  background: var(--accent-2);
+}
+.tstep.error .tnode {
+  background: var(--err);
+}
+@keyframes tpulse {
+  50% {
+    box-shadow: 0 0 0 7px color-mix(in srgb, var(--warn) 8%, transparent);
+  }
+}
+.trail::after {
+  content: "";
+  flex: 1;
+  width: 2px;
+  background: var(--line);
+  margin: 4px 0;
+}
+.tstep:last-child .trail::after {
+  display: none;
+}
+.tbody {
+  padding-bottom: 16px;
+}
+.tstep-title {
+  font-size: 14.5px;
+}
+.tstep-detail {
+  margin-top: 2px;
+}
+.tool-chip {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--accent-2);
+  white-space: nowrap;
+}
+
+/* chart + table */
+.chart {
+  width: 100%;
+  height: auto;
+}
+.axis {
+  fill: var(--faint);
+  font-size: 11px;
+  font-family: "JetBrains Mono", monospace;
+}
+.stat-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.stat-table th {
+  text-align: left;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line-strong);
+  font-size: 12px;
+}
+.stat-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* career */
+.big-score {
+  font-family: var(--display);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.kw {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+}
+.kw.ok {
+  color: var(--ok);
+  border-color: color-mix(in srgb, var(--ok) 45%, transparent);
+}
+.kw.miss {
+  color: var(--err);
+  border-color: color-mix(in srgb, var(--err) 45%, transparent);
+}
+.bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 15px;
+}
+
+/* research */
+.citation {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+.cite-id {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.foot {
+  padding: 30px 24px;
+  text-align: center;
+  color: var(--faint);
+  font-size: 13px;
+  border-top: 1px solid var(--line);
+}
